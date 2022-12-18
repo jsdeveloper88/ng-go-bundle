@@ -1,0 +1,31 @@
+<div class="flex-wrapper" style="display: flex; flex-direction: column; justify-content: space-between; min-height: 100vh;">
+  <div style="">
+    <nav class="navbar navbar-expand-sm bg-success navbar-dark">
+      <!-- Links -->
+      <ul class="navbar-nav">
+        <li class="nav-item">
+          <a routerLink="users" class="nav-link"
+             routerLinkActive="active">User List</a>
+        </li>
+        <li class="nav-item">
+          <a routerLink="add" class="nav-link"
+             routerLinkActive="active">Add User</a>
+        </li>
+      </ul>
+    </nav>
+
+    <div class="container">
+      <div class="card p-3 mt-3">
+        <!--<div class="card-body">-->
+          <router-outlet></router-outlet>
+        <!--</div>-->
+      </div>
+    </div>
+  </div>
+
+  <footer class="footer">
+    <div class="container">
+      <span>All Rights Reserved 2022 @Knowledge Factory</span>
+    </div>
+  </footer>
+</div>
