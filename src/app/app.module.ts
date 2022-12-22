@@ -14,8 +14,10 @@ import {RouterModule} from "@angular/router";
 
 import {UsersService} from "./services/users.service";
 
-import {AsyncPipe} from "@angular/common";
-import {TemplateBindingParseResult} from "@angular/compiler";
+import { LoaderComponent } from './controls/loader/loader.component';
+
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { ErrorComponent } from './controls/error/error.component';
 
 @NgModule({
   declarations: [
@@ -23,14 +25,17 @@ import {TemplateBindingParseResult} from "@angular/compiler";
     CreateUserComponent,
     UpdateUserComponent,
     UserDetailsComponent,
-    UserListComponent
+    UserListComponent,
+    LoaderComponent,
+    ErrorComponent
   ],
   imports: [
     BrowserModule,
     FormsModule,
     RouterModule,
     AppRoutingModule,
-    HttpClientModule
+    HttpClientModule,
+    FontAwesomeModule
   ],
   providers: [
     UsersService

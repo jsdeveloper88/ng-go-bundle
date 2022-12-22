@@ -1,96 +1,166 @@
-<h3> User List </h3>
-<div class="border-bottom" style="font-weight: bold;">
-  <ng-container *ngTemplateOutlet="userEntity">
-  </ng-container>
-</div>
+<div class="pos-rel">
+  <app-loader *ngIf="userListLoader" [size]="'3rem'" ></app-loader>
+  <app-error *ngIf="userListError" [error]="userListError"></app-error>
 
-<div *ngFor="let user of users; let ind = index"
-     [style.background-color]="ind % 2 == 1 ? '#0dcaf0' : ''">
-  <ng-container *ngTemplateOutlet="userEntity; context: {user: user}">
-  </ng-container>
-</div>
-
-<ng-template #str2BySpan let-strArr="arr">
-  <span style="white-space: pre;" *ngFor="let letter of strArr">{{letter}}</span>
-</ng-template>
-
-<ng-template #userEntity let-user="user">
-  <div class="row p-1" [ngSwitch]="!user">
-    <div class="col-4 col-sm-3 col-md-2 col-lg-1
+  <h3> User List </h3>
+  <div class="row g-0 border-bottom" style="font-weight: bold;">
+    <div class="col-4 col-md-3 col-lg-1
+                p-2
                 d-flex flex-row flex-wrap align-items-center">
-      <span *ngSwitchCase="true">ID</span>
-
-      <span *ngSwitchCase="false">
-        {{ user.id }}
-      </span>
+      <span>ID</span>
 
     </div>
 
-    <div class="col-8 col-sm-9 col-md-10 col-lg-11">
-      <div class="row">
-        <div class="col">
-          <div class="row">
-            <div class="col-12 col-sm
-                        d-flex flex-row flex-wrap align-items-center">
-              <span *ngSwitchCase="true">First Name</span>
+    <div class="col-8 col-md-9 col-lg-11">
+      <div class="row g-0">
 
-              <div *ngSwitchCase="false" class="mt-1 mb-1">
-                <span *ngIf="!user.beingUpd">{{ user.firstName }}</span>
-                <input *ngIf="user.beingUpd"
-                       type="text"
-                       class="form-control"
-                       [(ngModel)]="user.firstName">
-              </div>
+        <div class="col-12   col-lg-10">
+          <div class="row g-0">
+
+            <div class="col-12   col-md-6 col-lg-3
+                        p-2 pb-1   p-lg-2
+                        d-flex flex-row flex-wrap align-items-center">
+              <span>First Name</span>
             </div>
 
-            <div class="col-12 col-sm
+            <div class="col-12   col-md-6 col-lg-3
+                        p-2 pt-1 pb-1   pt-md-2   p-lg-2
                         d-flex flex-row flex-wrap align-items-center">
-              <span *ngSwitchCase="true">Last Name</span>
-
-              <div *ngSwitchCase="false" class="mt-1 mb-1">
-                <span *ngIf="!user.beingUpd">{{ user.lastName }}</span>
-                <input *ngIf="user.beingUpd"
-                       type="text"
-                       class="form-control"
-                       [(ngModel)]="user.lastName">
-              </div>
+              <span>Last Name</span>
             </div>
 
-            <div class="col-12 col-sm
+            <div class="col-12   col-md-6 col-lg-4
+                        p-2 pt-1 pb-1   p-lg-2
                         d-flex flex-row flex-wrap align-items-center">
-              <span *ngSwitchCase="true">Email</span>
-
-              <div *ngSwitchCase="false" class="mt-1 mb-1">
-                <span *ngIf="!user.beingUpd">{{ user.email }}</span>
-                <input *ngIf="user.beingUpd"
-                       type="text"
-                       class="form-control"
-                       [(ngModel)]="user.email">
-              </div>
+              <span>Email</span>
             </div>
 
-            <div class="col-12 col-sm-2
+            <div class="col-12   col-md-6 col-lg-2
                         d-flex flex-row flex-wrap align-items-center">
-              <span *ngSwitchCase="true"></span>
-              <div *ngSwitchCase="false" class="mt-1 mb-1">
-                <i *ngIf="user.beingUpd" (click)="updateUser(user)" class="material-icons cursor-pointer">cancel</i>
-                <i *ngIf="user.beingUpd" (click)="deleteUser(user.id)" class="material-icons cursor-pointer">save</i>
-              </div>
+              <!--space for Cancel/Save admitions-->
             </div>
+
           </div>
         </div>
 
-        <div class="col-12 col-sm-12 col-md-3 col-lg-2
-                    d-flex flex-row flex-wrap align-items-center
-                    mt-1 mb-1">
-          <span *ngSwitchCase="true">Actions</span>
-
-          <!--<span *ngSwitchCase="false">-->
-            <i *ngSwitchCase="false" (click)="updateUser(user)" class="material-icons cursor-pointer">update</i>
-            <i *ngSwitchCase="false" (click)="deleteUser(user.id)" class="material-icons cursor-pointer">delete</i>
-            <i *ngSwitchCase="false" (click)="userDetails(user.id)" class="material-icons cursor-pointer">info</i>
-<!--          </span>-->
+        <div class="col-12   col-lg-2
+                    p-2 pt-1   p-lg-2
+                    d-flex flex-row flex-wrap align-items-center">
+          <span>Actions</span>
         </div>
+
+      </div>
+    </div>
+  </div>
+
+  <div class="row g-0 pos-rel"
+       *ngFor="let user of users; let ind = index"
+       [style.background-color]="ind % 2 == 1 ? '#0dcaf0' : ''">
+    <app-loader *ngIf="loaders[user.id].del" [size]="'1rem'" ></app-loader>
+    <app-error *ngIf="errors[user.id].delMess" [error]="errors[user.id].delMess"></app-error>
+
+    <ng-container *ngTemplateOutlet="userEntity; context: {user: user}">
+    </ng-container>
+  </div>
+</div>
+
+<ng-template #userEntity let-user="user">
+  <div class="col-4 col-md-3 col-lg-1
+              p-2
+              d-flex flex-row flex-wrap align-items-center">
+    <span>{{ user.id }}</span>
+  </div>
+
+  <div class="col-8 col-md-9 col-lg-11">
+    <div class="row g-0">
+
+      <div class="col-12   col-lg-10
+                  pos-rel"
+           [ngSwitch]="user.beingUpd">
+        <app-loader *ngIf="loaders[user.id].save" [size]="'1rem'" ></app-loader>
+        <app-error *ngIf="errors[user.id].saveMess" [error]="errors[user.id].saveMess"></app-error>
+
+        <div *ngSwitchCase="false" class="row g-0">
+          <div class="col-12   col-md-6 col-lg-3
+                      p-2 pb-1   p-lg-2
+                      d-flex flex-row flex-wrap align-items-center">
+            <span>{{ user.firstName }}</span>
+          </div>
+
+          <div class="col-12   col-md-6 col-lg-3
+                      p-2 pt-1 pb-1   pt-md-2   p-lg-2
+                      d-flex flex-row flex-wrap align-items-center">
+            <span>{{ user.lastName }}</span>
+          </div>
+
+          <div class="col-12   col-md-6 col-lg-4
+                      p-2 pt-1 pb-1   p-lg-2
+                      d-flex flex-row flex-wrap align-items-center">
+            <span>{{ user.email }}</span>
+          </div>
+
+          <div class="col-12   col-md-6 col-lg-2
+                      d-flex flex-row flex-wrap align-items-center">
+          </div>
+        </div>
+
+        <div *ngSwitchCase="true"
+             class="row g-0">
+          <div class="col-12   col-md-6 col-lg-3
+                      p-2 pb-1   p-lg-2
+                      d-flex flex-row flex-wrap align-items-center">
+            <input type="text"
+                   class="form-control"
+                   [(ngModel)]="user.firstName">
+          </div>
+
+          <div class="col-12   col-md-6 col-lg-3
+                      p-2 pt-1 pb-1   pt-md-2   p-lg-2
+                      d-flex flex-row flex-wrap align-items-center">
+            <input type="text"
+                   class="form-control"
+                   [(ngModel)]="user.lastName">
+          </div>
+
+          <div class="col-12   col-md-6 col-lg-4
+                      p-2 pt-1 pb-1   p-lg-2
+                      d-flex flex-row flex-wrap align-items-center">
+            <input type="text"
+                   class="form-control"
+                   [(ngModel)]="user.email">
+          </div>
+
+          <div class="col-12   col-md-6 col-lg-2
+                      p-2 pt-1 pb-1   p-lg-2
+                      d-flex flex-row flex-wrap align-items-center">
+            <fa-icon (click)="userUpdate.cancel(user)"
+                     [icon]="icons.faCancel"
+                     class="fa-lg" role="button"></fa-icon>
+
+            <fa-icon (click)="userUpdate.save(user)"
+                     [icon]="icons.faSave"
+                     [style]="{marginLeft: '0.25rem'}"
+                     class="fa-lg" role="button"></fa-icon>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-12   col-lg-2
+                  p-2 pt-1   p-lg-2
+                  d-flex flex-row flex-wrap align-items-center">
+        <fa-icon (click)="updateUser(user)"
+                 [icon]="icons.faEdit"
+                 class="fa-xl" role="button"></fa-icon>
+
+        <fa-icon (click)="userDetails(user.id)"
+                 [icon]="icons.faInfoCircle"
+                 [style]="{marginLeft: '0.5rem'}"
+                 class="fa-xl" role="button"></fa-icon>
+
+        <fa-icon (click)="deleteUser(user.id)"
+                 [icon]="icons.faRemove"
+                 [style]="{marginLeft: '0.5rem'}"
+                 class="fa-xl" role="button"></fa-icon>
       </div>
     </div>
   </div>

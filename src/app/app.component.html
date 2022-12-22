@@ -1,4 +1,4 @@
-<div class="flex-wrapper" style="display: flex; flex-direction: column; justify-content: space-between; min-height: 100vh;">
+<div class="d-flex flex-column justify-content-between vh-100">
   <div style="">
     <nav class="navbar navbar-expand-sm bg-success navbar-dark">
       <!-- Links -->
@@ -15,10 +15,10 @@
     </nav>
 
     <div class="container">
-      <div class="card p-3 mt-3">
-        <!--<div class="card-body">-->
+      <div class="card mt-1" style="word-break: break-all;">
+        <div class="card-body p-2">
           <router-outlet></router-outlet>
-        <!--</div>-->
+        </div>
       </div>
     </div>
   </div>
@@ -29,3 +29,4 @@
     </div>
   </footer>
 </div>
+

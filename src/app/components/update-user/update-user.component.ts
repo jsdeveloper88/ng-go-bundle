@@ -19,7 +19,7 @@ export class UpdateUserComponent implements OnInit {
               private router: Router,
               private userService: UsersService) {
     this.id = this.route.snapshot.params['id'];
-    this.user = new User('', false, '', '', '');
+    this.user = new User();
   }
 
   ngOnInit() {

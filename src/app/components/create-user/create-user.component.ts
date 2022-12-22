@@ -15,23 +15,16 @@ export class CreateUserComponent implements OnInit {
 
   constructor(private userService: UsersService,
               private router: Router) {
-    this.user = new User('', false, 'lastName ', 'email ');
-    // this.user = new User("", "", "", "");
+    this.user = new User('', 'firstName ', 'lastName ', 'email ');
   }
 
   ngOnInit() {
-  }
-
-  newUser(): void {
-    // this.submitted = false;
-    // this.user = new User();
   }
 
   save() {
     this.userService
       .createUser(this.user).subscribe(newbie => {
         console.log(newbie);
-        // this.user = new User();
         this.gotoUserList();
       },
       error => console.log(error));
